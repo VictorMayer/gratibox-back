@@ -53,7 +53,10 @@ async function newSubscription(req, res) {
         const plan_id = planResult.rows[0].id;
         const { categories } = req.body;
         const result = await postCategories(categories, plan_id);
-        return result ? res.sendStatus(200) : res.sendStatus(400);
+        if (result) {
+            return res.sendStatus(201);
+        }
+        return res.sendStatus(400);
     } catch (error) {
         console.log(error); // eslint-disable-line no-console
         return res.sendStatus(500);
